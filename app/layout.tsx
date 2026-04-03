@@ -17,11 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth">NEXT_PUBLIC_ENABLE_CHATBOT=true
+NEXT_PUBLIC_ENABLE_QUOTE_TOOL=false
       <body className={inter.className}>
         <Navbar/>
         {children}
-        <ChatWidget/>
+        {process.env.NEXT_PUBLIC_ENABLE_CHATBOT === "true" && <ChatWidget />}
       </body>
     </html>
   );
