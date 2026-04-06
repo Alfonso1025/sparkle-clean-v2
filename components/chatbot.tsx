@@ -10,12 +10,7 @@ interface Message {
   timestamp: Date
 }
 
-const INITIAL_MESSAGE: Message = {
-  id: "initial",
-  role: "bot",
-  content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
-  timestamp: new Date(),
-}
+
 
 const BOT_RESPONSE =
   "Hi! In the full version I can answer questions about services, provide instant quotes and help book appointments 24/7 — even while the team is on a job. This is a preview of the feature. Speak with your web developer to see a live demo."
@@ -25,8 +20,17 @@ function formatTime(date: Date): string {
 }
 
 export function ChatWidget() {
+
+ const [messages, setMessages] = useState<Message[]>(() => [
+        {
+          id: "initial",
+          role: "bot",
+          content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
+          timestamp: new Date(),
+        }
+      ])
+
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [isDemoComplete, setIsDemoComplete] = useState(false)
@@ -42,8 +46,12 @@ export function ChatWidget() {
 
   const handleToggle = () => {
     if (!isOpen) {
-      // Reset conversation when opening
-      setMessages([{ ...INITIAL_MESSAGE, timestamp: new Date() }])
+      setMessages([{
+        id: "initial",
+        role: "bot",
+        content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
+        timestamp: new Date(),
+      }])
       setIsDemoComplete(false)
       setInput("")
     }

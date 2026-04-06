@@ -2,10 +2,11 @@
 
 import { useEffect, useRef } from "react"
 import { Phone, Check, ChevronDown } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
+  const router = useRouter()
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -79,13 +80,21 @@ export default function Hero() {
     }
   }, [])
 
-  const scrollToContact = () => {
+ /*const scrollToContact = () => {
     const contactSection = document.getElementById("contact")
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" })
     }
   }
-
+  */
+const handleGetQuote = () => {
+  if (process.env.NEXT_PUBLIC_ENABLE_QUOTE_TOOL === "true") {
+    router.push("/quote")
+  } else {
+    router.push("/#contact")
+  }
+}
+  
   const scrollDown = () => {
     window.scrollBy({ top: window.innerHeight, behavior: "smooth" })
   }
@@ -126,7 +135,7 @@ export default function Hero() {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-10 md:mb-12">
             <button
-              onClick={scrollToContact}
+              onClick={handleGetQuote}
               className="bg-amber-400 text-stone-950 px-8 py-4 text-xs tracking-[0.2em] uppercase font-medium hover:bg-amber-300 transition-colors duration-300"
             >
               Get a Free Quote

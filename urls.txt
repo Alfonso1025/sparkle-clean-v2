@@ -1,0 +1,3 @@
+base =     sparkle-clean-psi.vercel.app
+
+chatbot-feature =     sparkle-clean-chatbot.vercel.app

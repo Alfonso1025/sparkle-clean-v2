@@ -17,8 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">NEXT_PUBLIC_ENABLE_CHATBOT=true
-NEXT_PUBLIC_ENABLE_QUOTE_TOOL=false
+    <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Navbar/>
         {children}
