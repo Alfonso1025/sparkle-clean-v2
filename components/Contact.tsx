@@ -18,51 +18,50 @@ export default function Contact() {
   })
   const [errorMessage, setErrorMessage] = useState('something went wrong')
 
-
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  console.log('form submission triggered')
-  // Client-side validation before hitting the server
-  if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
-    setFormState("error")
-    setErrorMessage("Please fill in all required fields.")
-    return
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(formData.email)) {
-    setFormState("error")
-    setErrorMessage("Please enter a valid email address.")
-    console.log(errorMessage)
-    return
-  }
-  console.log(formState)
-  setFormState("loading")
-
-  try {
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
+    e.preventDefault()
+    console.log('form submission triggered')
+    // Client-side validation before hitting the server
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
       setFormState("error")
-      setErrorMessage(data.error || "Something went wrong. Please try again.")
+      setErrorMessage("Please fill in all required fields.")
       return
     }
 
-    setFormState("success")
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setFormState("error")
+      setErrorMessage("Please enter a valid email address.")
+      console.log(errorMessage)
+      return
+    }
+    console.log(formState)
+    setFormState("loading")
 
-  } catch (err) {
-    // Network failure or server completely unreachable
-    console.log(err)
-    setFormState("error")
-    setErrorMessage("Unable to send your message. Please check your connection or call us directly.")
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setFormState("error")
+        setErrorMessage(data.error || "Something went wrong. Please try again.")
+        return
+      }
+
+      setFormState("success")
+
+    } catch (err) {
+      // Network failure or server completely unreachable
+      console.log(err)
+      setFormState("error")
+      setErrorMessage("Unable to send your message. Please check your connection or call us directly.")
+    }
   }
-}
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({
@@ -72,17 +71,20 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="bg-stone-900 py-24 px-6 lg:py-32 lg:px-12">
-      <div className="max-w-7xl mx-auto">
+    <section id="contact" className="bg-white py-24 px-6 lg:py-32 lg:px-12 relative overflow-hidden">
+      {/* Background gradient matching Hero */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(14,165,233,0.08)_0%,_transparent_50%),_radial-gradient(ellipse_at_bottom_left,_rgba(14,165,233,0.05)_0%,_transparent_50%)]" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="text-amber-400 text-sm font-light tracking-[0.2em] uppercase">
+          <span className="text-sky-600 text-sm font-semibold tracking-[0.15em] uppercase">
             Get In Touch
           </span>
-          <h2 className="text-amber-50 text-3xl lg:text-5xl font-light tracking-widest uppercase mt-4">
+          <h2 className="text-slate-800 text-3xl lg:text-5xl font-bold tracking-wide mt-4">
             Request a Free Quote
           </h2>
-          <p className="text-stone-400 mt-4 font-light tracking-wide">
+          <p className="text-slate-600 mt-4 font-medium tracking-wide">
             We&apos;ll get back to you within 2 hours during business hours
           </p>
         </div>
@@ -93,25 +95,25 @@ export default function Contact() {
           <div>
             {formState === "success" ? (
               <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div className="w-16 h-16 border border-amber-400 flex items-center justify-center mb-6">
+                <div className="w-16 h-16 border border-sky-600 flex items-center justify-center mb-6 rounded-md">
                   <svg
-                    className="w-8 h-8 text-amber-400"
+                    className="w-8 h-8 text-sky-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      strokeLinecap="square"
-                      strokeLinejoin="miter"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       strokeWidth={2}
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
                 </div>
-                <h3 className="text-amber-50 text-2xl font-light tracking-widest uppercase mb-4">
+                <h3 className="text-slate-800 text-2xl font-bold tracking-wide mb-4">
                   Message Sent
                 </h3>
-                <p className="text-stone-400 font-light tracking-wide">
+                <p className="text-slate-600 font-medium tracking-wide">
                   We&apos;ll be in touch within 2 hours.
                 </p>
               </div>
@@ -119,10 +121,9 @@ export default function Contact() {
               <form onSubmit={handleSubmit} noValidate className="space-y-6">
                 {/* Error Banner */}
                 {formState === "error" && (
-                  <div className="bg-red-900/20 border border-red-400/40 p-4">
-                    <p className="text-red-400 text-sm font-light tracking-wide">
+                  <div className="bg-red-50 border border-red-200 p-4 rounded-md">
+                    <p className="text-red-600 text-sm font-medium tracking-wide">
                       {errorMessage}
-                      
                     </p>
                   </div>
                 )}
@@ -132,9 +133,9 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="fullName"
-                      className="block text-stone-300 text-sm tracking-widest uppercase font-light mb-2"
+                      className="block text-slate-700 text-sm tracking-wide uppercase font-semibold mb-2"
                     >
-                      Full Name <span className="text-amber-400">*</span>
+                      Full Name <span className="text-sky-600">*</span>
                     </label>
                     <input
                       type="text"
@@ -144,15 +145,15 @@ export default function Contact() {
                       value={formData.fullName}
                       onChange={handleChange}
                       placeholder="Your full name"
-                      className="w-full bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-4 py-3 font-light tracking-wide focus:border-amber-400/60 focus:outline-none transition-colors duration-300"
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 px-4 py-3 font-medium tracking-wide focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors duration-300 rounded-md"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-stone-300 text-sm tracking-widest uppercase font-light mb-2"
+                      className="block text-slate-700 text-sm tracking-wide uppercase font-semibold mb-2"
                     >
-                      Email Address <span className="text-amber-400">*</span>
+                      Email Address <span className="text-sky-600">*</span>
                     </label>
                     <input
                       type="email"
@@ -162,7 +163,7 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your@email.com"
-                      className="w-full bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-4 py-3 font-light tracking-wide focus:border-amber-400/60 focus:outline-none transition-colors duration-300"
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 px-4 py-3 font-medium tracking-wide focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors duration-300 rounded-md"
                     />
                   </div>
                 </div>
@@ -172,9 +173,9 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="phone"
-                      className="block text-stone-300 text-sm tracking-widest uppercase font-light mb-2"
+                      className="block text-slate-700 text-sm tracking-wide uppercase font-semibold mb-2"
                     >
-                      Phone Number <span className="text-stone-400 text-xs normal-case tracking-normal">(optional)</span>
+                      Phone Number <span className="text-slate-400 text-xs normal-case tracking-normal">(optional)</span>
                     </label>
                     <input
                       type="tel"
@@ -183,15 +184,15 @@ export default function Contact() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="0412 345 678"
-                      className="w-full bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-4 py-3 font-light tracking-wide focus:border-amber-400/60 focus:outline-none transition-colors duration-300"
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 px-4 py-3 font-medium tracking-wide focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors duration-300 rounded-md"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="company"
-                      className="block text-stone-300 text-sm tracking-widest uppercase font-light mb-2"
+                      className="block text-slate-700 text-sm tracking-wide uppercase font-semibold mb-2"
                     >
-                      Company Name <span className="text-stone-400 text-xs normal-case tracking-normal">(optional)</span>
+                      Company Name <span className="text-slate-400 text-xs normal-case tracking-normal">(optional)</span>
                     </label>
                     <input
                       type="text"
@@ -200,7 +201,7 @@ export default function Contact() {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder="Your company"
-                      className="w-full bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-4 py-3 font-light tracking-wide focus:border-amber-400/60 focus:outline-none transition-colors duration-300"
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 px-4 py-3 font-medium tracking-wide focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors duration-300 rounded-md"
                     />
                   </div>
                 </div>
@@ -209,9 +210,9 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="suburb"
-                    className="block text-stone-300 text-sm tracking-widest uppercase font-light mb-2"
+                    className="block text-slate-700 text-sm tracking-wide uppercase font-semibold mb-2"
                   >
-                    Suburb <span className="text-stone-400 text-xs normal-case tracking-normal">(optional)</span>
+                    Suburb <span className="text-slate-400 text-xs normal-case tracking-normal">(optional)</span>
                   </label>
                   <input
                     type="text"
@@ -220,7 +221,7 @@ export default function Contact() {
                     value={formData.suburb}
                     onChange={handleChange}
                     placeholder="e.g. Campbelltown"
-                    className="w-full bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-4 py-3 font-light tracking-wide focus:border-amber-400/60 focus:outline-none transition-colors duration-300"
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 px-4 py-3 font-medium tracking-wide focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors duration-300 rounded-md"
                   />
                 </div>
 
@@ -228,9 +229,9 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-stone-300 text-sm tracking-widest uppercase font-light mb-2"
+                    className="block text-slate-700 text-sm tracking-wide uppercase font-semibold mb-2"
                   >
-                    Message <span className="text-amber-400">*</span>
+                    Message <span className="text-sky-600">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -240,7 +241,7 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your cleaning needs..."
-                    className="w-full bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-4 py-3 font-light tracking-wide focus:border-amber-400/60 focus:outline-none transition-colors duration-300 resize-none"
+                    className="w-full bg-slate-50 border border-slate-300 text-slate-800 placeholder-slate-400 px-4 py-3 font-medium tracking-wide focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors duration-300 resize-none rounded-md"
                   />
                 </div>
 
@@ -249,7 +250,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={formState === "loading"}
-                    className="w-full lg:w-auto bg-amber-400 text-stone-950 font-bold tracking-widest uppercase px-10 py-4 hover:bg-amber-300 transition-colors duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full lg:w-auto bg-sky-600 hover:bg-sky-700 text-white px-10 py-4 text-xs tracking-[0.2em] uppercase font-semibold rounded-md transition-colors duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     {formState === "loading" ? "Sending..." : "Send Message"}
                   </button>
@@ -260,7 +261,7 @@ export default function Contact() {
 
           {/* Right Column - Business Details */}
           <div>
-            <h3 className="text-amber-50 text-xl font-light tracking-widest uppercase mb-8">
+            <h3 className="text-slate-800 text-xl font-bold tracking-wide mb-8">
               Find Us
             </h3>
 
@@ -268,21 +269,21 @@ export default function Contact() {
               {/* Phone */}
               <div className="flex items-center gap-4">
                 <svg
-                  className="w-5 h-5 text-amber-400 flex-shrink-0"
+                  className="w-5 h-5 text-sky-600 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={1.5}
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
                 <a
                   href="tel:0412345678"
-                  className="text-amber-50 font-light tracking-wide hover:text-amber-400 transition-colors duration-300"
+                  className="text-slate-700 font-medium tracking-wide hover:text-sky-600 transition-colors duration-300"
                 >
                   0412 345 678
                 </a>
@@ -291,21 +292,21 @@ export default function Contact() {
               {/* Email */}
               <div className="flex items-center gap-4">
                 <svg
-                  className="w-5 h-5 text-amber-400 flex-shrink-0"
+                  className="w-5 h-5 text-sky-600 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={1.5}
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
                 <a
                   href="mailto:hello@sparkleclean.com.au"
-                  className="text-amber-50 font-light tracking-wide hover:text-amber-400 transition-colors duration-300"
+                  className="text-slate-700 font-medium tracking-wide hover:text-sky-600 transition-colors duration-300"
                 >
                   hello@sparkleclean.com.au
                 </a>
@@ -314,19 +315,19 @@ export default function Contact() {
               {/* Hours */}
               <div className="flex items-center gap-4">
                 <svg
-                  className="w-5 h-5 text-amber-400 flex-shrink-0"
+                  className="w-5 h-5 text-sky-600 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={1.5}
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span className="text-amber-50 font-light tracking-wide">
+                <span className="text-slate-700 font-medium tracking-wide">
                   Mon–Sat 7am–7pm, Sun 8am–5pm
                 </span>
               </div>
@@ -334,42 +335,41 @@ export default function Contact() {
               {/* Address */}
               <div className="flex items-center gap-4">
                 <svg
-                  className="w-5 h-5 text-amber-400 flex-shrink-0"
+                  className="w-5 h-5 text-sky-600 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={1.5}
                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                   />
                   <path
-                    strokeLinecap="square"
-                    strokeLinejoin="miter"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     strokeWidth={1.5}
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span className="text-amber-50 font-light tracking-wide">
+                <span className="text-slate-700 font-medium tracking-wide">
                   Campbelltown NSW 2560
                 </span>
               </div>
             </div>
 
-            {/* Google Maps Placeholder */}
             {/* Google Maps Embed */}
-            <div className="border border-amber-900/20 overflow-hidden h-64">
+            <div className="border border-slate-200 overflow-hidden h-64 rounded-md">
               <iframe
-                  src={googleMapsEmbeded}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                src={googleMapsEmbeded}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </div>
@@ -377,3 +377,4 @@ export default function Contact() {
     </section>
   )
 }
+

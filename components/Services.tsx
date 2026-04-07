@@ -36,18 +36,21 @@ export function Services() {
   return (
     <section
       id="services"
-      className="bg-stone-900 px-6 py-24 lg:px-12 lg:py-32"
+      className="relative bg-white px-6 py-24 lg:px-12 lg:py-32 overflow-hidden"
     >
-      <div className="mx-auto max-w-7xl">
+      {/* Background gradient matching Hero */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(14,165,233,0.08)_0%,_transparent_50%),_radial-gradient(ellipse_at_bottom_left,_rgba(14,165,233,0.05)_0%,_transparent_50%)]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mb-12 text-center lg:mb-16">
-          <p className="mb-4 text-xs font-light uppercase tracking-[0.2em] text-amber-400">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-sky-600">
             What We Offer
           </p>
-          <h2 className="mb-4 text-2xl font-light uppercase tracking-widest text-amber-50 md:text-3xl lg:text-4xl">
+          <h2 className="mb-4 text-2xl font-bold uppercase tracking-wide text-slate-800 md:text-3xl lg:text-4xl">
             Our Cleaning Services
           </h2>
-          <p className="text-sm font-light text-stone-400">
+          <p className="text-base font-medium text-slate-600">
             Professional cleaning solutions tailored to your needs
           </p>
         </div>
@@ -58,7 +61,7 @@ export function Services() {
             <Link
               key={service.title}
               href={service.href}
-              className="group relative h-72 overflow-hidden border border-amber-400/20 transition-colors duration-300 hover:border-amber-400/60 md:h-80"
+              className="group relative h-72 overflow-hidden rounded-md border border-slate-100 shadow-sm transition-all duration-300 hover:border-sky-500/60 hover:shadow-md md:h-80"
             >
               {/* Background Image */}
               <div className="absolute inset-0">
@@ -70,22 +73,22 @@ export function Services() {
               </div>
 
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/50 to-transparent" />
 
               {/* Icon */}
               <div className="absolute left-4 top-4 lg:left-6 lg:top-6">
-                <service.icon className="h-5 w-5 text-amber-400" strokeWidth={1.5} />
+                <service.icon className="h-5 w-5 text-sky-400" strokeWidth={1.5} />
               </div>
 
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-6">
-                <h3 className="mb-2 text-sm font-light uppercase tracking-widest text-amber-50">
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-widest text-white">
                   {service.title}
                 </h3>
-                <p className="mb-4 text-xs font-light leading-relaxed text-stone-300">
+                <p className="mb-4 text-xs font-medium leading-relaxed text-slate-300">
                   {service.description}
                 </p>
-                <span className="text-xs font-light uppercase tracking-[0.2em] text-amber-400">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-400 transition-colors duration-300 group-hover:text-sky-300">
                   {"Learn More →"}
                 </span>
               </div>
