@@ -10,8 +10,6 @@ interface Message {
   timestamp: Date
 }
 
-
-
 const BOT_RESPONSE =
   "Hi! In the full version I can answer questions about services, provide instant quotes and help book appointments 24/7 — even while the team is on a job. This is a preview of the feature. Speak with your web developer to see a live demo."
 
@@ -20,15 +18,14 @@ function formatTime(date: Date): string {
 }
 
 export function ChatWidget() {
-
- const [messages, setMessages] = useState<Message[]>(() => [
-        {
-          id: "initial",
-          role: "bot",
-          content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
-          timestamp: new Date(),
-        }
-      ])
+  const [messages, setMessages] = useState<Message[]>(() => [
+    {
+      id: "initial",
+      role: "bot",
+      content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
+      timestamp: new Date(),
+    },
+  ])
 
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState("")
@@ -46,12 +43,14 @@ export function ChatWidget() {
 
   const handleToggle = () => {
     if (!isOpen) {
-      setMessages([{
-        id: "initial",
-        role: "bot",
-        content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
-        timestamp: new Date(),
-      }])
+      setMessages([
+        {
+          id: "initial",
+          role: "bot",
+          content: "Hi, I'm the Sparkle Clean virtual assistant. How can I help you today?",
+          timestamp: new Date(),
+        },
+      ])
       setIsDemoComplete(false)
       setInput("")
     }
@@ -97,44 +96,44 @@ export function ChatWidget() {
       {/* Floating Button */}
       <button
         onClick={handleToggle}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-amber-400 flex items-center justify-center shadow-lg transition-colors duration-300 hover:bg-amber-300"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-md bg-sky-600 flex items-center justify-center shadow-lg transition-colors duration-300 hover:bg-sky-700"
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         {isOpen ? (
-          <X className="w-6 h-6 text-stone-950" />
+          <X className="w-6 h-6 text-white" />
         ) : (
-          <MessageCircle className="w-6 h-6 text-stone-950" />
+          <MessageCircle className="w-6 h-6 text-white" />
         )}
         {/* Pulsing dot */}
         {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 animate-pulse" />
+          <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-sky-400 animate-pulse" />
         )}
       </button>
 
       {/* Chat Window */}
       <div
-        className={`fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-stone-950 border border-amber-900/20 shadow-2xl flex flex-col max-h-[500px] transition-all duration-300 origin-bottom-right ${
+        className={`fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white border border-slate-200 rounded-md shadow-2xl flex flex-col max-h-[500px] transition-all duration-300 origin-bottom-right ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-4 pointer-events-none"
         }`}
       >
         {/* Header */}
-        <div className="bg-stone-900 border-b border-amber-900/20 px-4 py-3 flex items-center justify-between">
+        <div className="bg-slate-800 rounded-t-md px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-50 text-sm font-light uppercase tracking-widest">
+            <Sparkles className="w-5 h-5 text-sky-400" />
+            <span className="text-white text-sm font-semibold uppercase tracking-widest">
               Sparkle Assistant
             </span>
           </div>
-          <span className="text-green-400 text-xs flex items-center gap-1">
-            <span className="w-1.5 h-1.5 bg-green-400 inline-block" />
+          <span className="text-sky-400 text-xs flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 inline-block" />
             Online
           </span>
         </div>
 
         {/* Messages Area */}
-        <div className="h-72 overflow-y-auto p-4 flex flex-col gap-3 bg-stone-950">
+        <div className="h-72 overflow-y-auto p-4 flex flex-col gap-3 bg-white">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -143,15 +142,15 @@ export function ChatWidget() {
               }`}
             >
               <div
-                className={`max-w-[85%] px-3 py-2 text-sm ${
+                className={`max-w-[85%] px-3 py-2 text-sm rounded-md ${
                   message.role === "user"
-                    ? "bg-amber-400 text-stone-950"
-                    : "bg-stone-800 text-stone-200"
+                    ? "bg-sky-600 text-white"
+                    : "bg-slate-100 text-slate-700"
                 }`}
               >
                 {message.content}
               </div>
-              <span className="text-stone-500 text-xs mt-1">
+              <span className="text-slate-400 text-xs mt-1">
                 {formatTime(message.timestamp)}
               </span>
             </div>
@@ -160,17 +159,17 @@ export function ChatWidget() {
           {/* Typing Indicator */}
           {isTyping && (
             <div className="flex flex-col items-start">
-              <div className="bg-stone-800 px-4 py-3 flex gap-1">
+              <div className="bg-slate-100 px-4 py-3 rounded-md flex gap-1">
                 <span
-                  className="w-2 h-2 bg-stone-400 animate-bounce"
+                  className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"
                   style={{ animationDelay: "0ms" }}
                 />
                 <span
-                  className="w-2 h-2 bg-stone-400 animate-bounce"
+                  className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"
                   style={{ animationDelay: "150ms" }}
                 />
                 <span
-                  className="w-2 h-2 bg-stone-400 animate-bounce"
+                  className="w-2 h-2 rounded-full bg-slate-400 animate-bounce"
                   style={{ animationDelay: "300ms" }}
                 />
               </div>
@@ -181,7 +180,7 @@ export function ChatWidget() {
         </div>
 
         {/* Input Area */}
-        <div className="bg-stone-900 border-t border-amber-900/20 p-3">
+        <div className="bg-slate-50 border-t border-slate-200 rounded-b-md p-3">
           <div className="flex gap-2">
             <input
               type="text"
@@ -190,19 +189,19 @@ export function ChatWidget() {
               onKeyDown={handleKeyDown}
               disabled={isDemoComplete || isTyping}
               placeholder="Type a message..."
-              className="flex-1 bg-stone-950 border border-amber-900/30 text-amber-50 placeholder-stone-500 px-3 py-2 text-sm focus:outline-none focus:border-amber-400/40 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-white border border-slate-200 text-slate-800 placeholder-slate-400 px-3 py-2 text-sm rounded-md focus:outline-none focus:border-sky-500 disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <button
               onClick={handleSend}
               disabled={isDemoComplete || isTyping || !input.trim()}
-              className="bg-amber-400 text-stone-950 px-3 py-2 transition-colors duration-300 hover:bg-amber-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-amber-400"
+              className="bg-sky-600 text-white px-3 py-2 rounded-md transition-colors duration-300 hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-sky-600"
               aria-label="Send message"
             >
               <Send className="w-4 h-4" />
             </button>
           </div>
           {isDemoComplete && (
-            <p className="text-stone-500 text-xs text-center mt-2">
+            <p className="text-slate-500 text-xs text-center mt-2">
               Demo mode — responses are simulated
             </p>
           )}
