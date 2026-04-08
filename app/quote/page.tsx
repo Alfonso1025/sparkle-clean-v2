@@ -175,17 +175,20 @@ export default function QuotePage() {
     }
   }
   return (
-    <main className="min-h-screen bg-stone-950">
-      <div className="mx-auto max-w-2xl px-6 py-16 lg:py-24">
+    <main className="relative min-h-screen bg-white overflow-hidden">
+      {/* Background gradient matching Hero */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(14,165,233,0.08)_0%,_transparent_50%),_radial-gradient(ellipse_at_bottom_left,_rgba(14,165,233,0.05)_0%,_transparent_50%)]" />
+
+      <div className="relative z-10 mx-auto max-w-2xl px-6 py-16 lg:py-24">
         {/* Header */}
         <div className="mb-12 text-center">
-          <span className="mb-4 inline-block text-xs font-light uppercase tracking-widest text-amber-400">
+          <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-[0.15em] text-sky-600">
             Free Quote Calculator
           </span>
-          <h1 className="mb-4 text-2xl font-light uppercase tracking-widest text-amber-50 md:text-3xl">
+          <h1 className="mb-4 text-2xl font-bold uppercase tracking-wide text-slate-800 md:text-3xl">
             Get Your Instant Quote
           </h1>
-          <p className="text-sm text-stone-400">
+          <p className="text-base font-medium text-slate-600">
             Answer a few quick questions and we&apos;ll calculate your price instantly
           </p>
         </div>
@@ -197,30 +200,29 @@ export default function QuotePage() {
               const stepNumber = index + 1
               const isCompleted = stepNumber < currentStep
               const isCurrent = stepNumber === currentStep
-              
 
               return (
                 <div key={step} className="flex flex-1 items-center">
                   <div className="flex flex-col items-center">
                     <div
-                      className={`flex h-8 w-8 items-center justify-center text-sm font-light transition-colors duration-300 ${
+                      className={`flex h-8 w-8 items-center justify-center rounded-md text-sm font-medium transition-colors duration-300 ${
                         isCurrent
-                          ? "bg-amber-400 text-stone-950"
+                          ? "bg-sky-600 text-white"
                           : isCompleted
-                            ? "border border-amber-400 bg-amber-400/20 text-amber-400"
-                            : "bg-stone-800 text-stone-600"
+                            ? "border border-sky-500 bg-sky-50 text-sky-600"
+                            : "bg-slate-100 text-slate-400"
                       }`}
                     >
                       {stepNumber}
                     </div>
-                    <span className="mt-2 hidden text-xs uppercase tracking-widest text-stone-400 sm:block">
+                    <span className="mt-2 hidden text-xs font-medium uppercase tracking-widest text-slate-500 sm:block">
                       {step}
                     </span>
                   </div>
                   {index < STEPS.length - 1 && (
                     <div
                       className={`mx-2 h-px flex-1 ${
-                        isCompleted ? "bg-amber-400/40" : "bg-stone-800"
+                        isCompleted ? "bg-sky-400" : "bg-slate-200"
                       }`}
                     />
                   )}
@@ -231,14 +233,14 @@ export default function QuotePage() {
         </div>
 
         {/* Step Card */}
-        <div className="border border-amber-900/20 bg-stone-900 p-6 md:p-8">
+        <div className="rounded-md border border-slate-200 bg-white p-6 shadow-lg ring-1 ring-slate-100 md:p-8">
           {/* Step 1: Property */}
           {currentStep === 1 && (
             <div className="animate-fade-in">
-              <h2 className="mb-6 text-lg font-light uppercase tracking-widest text-amber-50">
+              <h2 className="mb-6 text-lg font-semibold uppercase tracking-widest text-slate-800">
                 Property
               </h2>
-              <p className="mb-6 text-sm text-stone-400">
+              <p className="mb-6 text-sm font-medium text-slate-600">
                 What type of property are you booking for?
               </p>
 
@@ -247,14 +249,16 @@ export default function QuotePage() {
                   <button
                     key={id}
                     onClick={() => updateFormData("propertyType", id)}
-                    className={`flex flex-col items-center border p-4 transition-all duration-300 ${
+                    className={`flex flex-col items-center rounded-md border p-4 shadow-sm transition-all duration-300 ${
                       formData.propertyType === id
-                        ? "border-amber-400 bg-amber-400/10"
-                        : "border-amber-900/20 bg-stone-950 hover:bg-amber-400/5"
+                        ? "border-sky-500 bg-sky-50 shadow-sky-100"
+                        : "border-slate-200 bg-slate-50/70 hover:border-sky-400 hover:bg-sky-50/80 hover:shadow-md"
                     }`}
                   >
-                    <Icon className="mb-2 h-6 w-6 text-amber-400" />
-                    <span className="text-sm uppercase tracking-widest text-amber-50">{label}</span>
+                    <Icon className="mb-2 h-6 w-6 text-sky-600" />
+                    <span className="text-sm font-medium uppercase tracking-widest text-slate-800">
+                      {label}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -262,24 +266,26 @@ export default function QuotePage() {
               <div className="grid grid-cols-2 gap-4">
                 {/* Bedrooms */}
                 <div>
-                  <label className="mb-2 block text-sm font-light uppercase tracking-widest text-stone-300">
+                  <label className="mb-2 block text-sm font-semibold uppercase tracking-widest text-slate-700">
                     Bedrooms
                   </label>
-                  <div className="flex items-center border border-amber-900/20 bg-stone-950">
+                  <div className="flex items-center rounded-md border border-slate-200 bg-slate-50/70 shadow-sm">
                     <button
                       onClick={() =>
                         updateFormData("bedrooms", Math.max(0, formData.bedrooms - 1))
                       }
-                      className="p-3 text-amber-400 transition-colors duration-300 hover:bg-amber-400/10"
+                      className="p-3 text-sky-600 transition-colors duration-300 hover:bg-sky-50/80"
                     >
                       <Minus className="h-4 w-4" />
                     </button>
-                    <span className="flex-1 text-center text-amber-50">{formData.bedrooms}</span>
+                    <span className="flex-1 text-center font-medium text-slate-800">
+                      {formData.bedrooms}
+                    </span>
                     <button
                       onClick={() =>
                         updateFormData("bedrooms", Math.min(6, formData.bedrooms + 1))
                       }
-                      className="p-3 text-amber-400 transition-colors duration-300 hover:bg-amber-400/10"
+                      className="p-3 text-sky-600 transition-colors duration-300 hover:bg-sky-50"
                     >
                       <Plus className="h-4 w-4" />
                     </button>
@@ -288,24 +294,26 @@ export default function QuotePage() {
 
                 {/* Bathrooms */}
                 <div>
-                  <label className="mb-2 block text-sm font-light uppercase tracking-widest text-stone-300">
+                  <label className="mb-2 block text-sm font-semibold uppercase tracking-widest text-slate-700">
                     Bathrooms
                   </label>
-                  <div className="flex items-center border border-amber-900/20 bg-stone-950">
+                  <div className="flex items-center rounded-md border border-slate-200 bg-slate-50/70 shadow-sm">
                     <button
                       onClick={() =>
                         updateFormData("bathrooms", Math.max(1, formData.bathrooms - 1))
                       }
-                      className="p-3 text-amber-400 transition-colors duration-300 hover:bg-amber-400/10"
+                      className="p-3 text-sky-600 transition-colors duration-300 hover:bg-sky-50/80"
                     >
                       <Minus className="h-4 w-4" />
                     </button>
-                    <span className="flex-1 text-center text-amber-50">{formData.bathrooms}</span>
+                    <span className="flex-1 text-center font-medium text-slate-800">
+                      {formData.bathrooms}
+                    </span>
                     <button
                       onClick={() =>
                         updateFormData("bathrooms", Math.min(4, formData.bathrooms + 1))
                       }
-                      className="p-3 text-amber-400 transition-colors duration-300 hover:bg-amber-400/10"
+                      className="p-3 text-sky-600 transition-colors duration-300 hover:bg-sky-50"
                     >
                       <Plus className="h-4 w-4" />
                     </button>
@@ -318,31 +326,33 @@ export default function QuotePage() {
           {/* Step 2: Service */}
           {currentStep === 2 && (
             <div className="animate-fade-in">
-              <h2 className="mb-6 text-lg font-light uppercase tracking-widest text-amber-50">
+              <h2 className="mb-6 text-lg font-semibold uppercase tracking-widest text-slate-800">
                 Service
               </h2>
-              <p className="mb-6 text-sm text-stone-400">What type of cleaning do you need?</p>
+              <p className="mb-6 text-sm font-medium text-slate-600">
+                What type of cleaning do you need?
+              </p>
 
               <div className="mb-8 grid grid-cols-2 gap-4">
                 {SERVICE_TYPES.map(({ id, label, icon: Icon }) => (
                   <button
                     key={id}
                     onClick={() => updateFormData("serviceType", id)}
-                    className={`flex flex-col items-center border p-4 transition-all duration-300 ${
+                    className={`flex flex-col items-center rounded-md border p-4 shadow-sm transition-all duration-300 ${
                       formData.serviceType === id
-                        ? "border-amber-400 bg-amber-400/10"
-                        : "border-amber-900/20 bg-stone-950 hover:bg-amber-400/5"
+                        ? "border-sky-500 bg-sky-50 shadow-sky-100"
+                        : "border-slate-200 bg-slate-50/70 hover:border-sky-400 hover:bg-sky-50/80 hover:shadow-md"
                     }`}
                   >
-                    <Icon className="mb-2 h-6 w-6 text-amber-400" />
-                    <span className="text-center text-sm uppercase tracking-widest text-amber-50">
+                    <Icon className="mb-2 h-6 w-6 text-sky-600" />
+                    <span className="text-center text-sm font-medium uppercase tracking-widest text-slate-800">
                       {label}
                     </span>
                   </button>
                 ))}
               </div>
 
-              <p className="mb-4 text-sm text-stone-400">
+              <p className="mb-4 text-sm font-medium text-slate-600">
                 How often would you like this service?
               </p>
               <div className="mb-8 flex flex-wrap gap-2">
@@ -350,10 +360,10 @@ export default function QuotePage() {
                   <button
                     key={freq}
                     onClick={() => updateFormData("frequency", freq)}
-                    className={`border px-4 py-2 text-xs uppercase tracking-widest transition-all duration-300 ${
+                    className={`rounded-md border px-4 py-2 text-xs font-semibold uppercase tracking-widest shadow-sm transition-all duration-300 ${
                       formData.frequency === freq
-                        ? "border-amber-400 bg-amber-400 text-stone-950"
-                        : "border-amber-900/20 bg-stone-950 text-amber-50 hover:bg-amber-400/5"
+                        ? "border-sky-600 bg-sky-600 text-white shadow-sky-200"
+                        : "border-slate-200 bg-slate-50/70 text-slate-700 hover:border-sky-400 hover:bg-sky-50/80 hover:shadow-md"
                     }`}
                   >
                     {freq}
@@ -361,7 +371,7 @@ export default function QuotePage() {
                 ))}
               </div>
 
-              <p className="mb-4 text-sm text-stone-400">
+              <p className="mb-4 text-sm font-medium text-slate-600">
                 How would you describe the property condition?
               </p>
               <div className="flex flex-wrap gap-2">
@@ -369,10 +379,10 @@ export default function QuotePage() {
                   <button
                     key={cond}
                     onClick={() => updateFormData("condition", cond)}
-                    className={`border px-4 py-2 text-xs uppercase tracking-widest transition-all duration-300 ${
+                    className={`rounded-md border px-4 py-2 text-xs font-semibold uppercase tracking-widest shadow-sm transition-all duration-300 ${
                       formData.condition === cond
-                        ? "border-amber-400 bg-amber-400 text-stone-950"
-                        : "border-amber-900/20 bg-stone-950 text-amber-50 hover:bg-amber-400/5"
+                        ? "border-sky-600 bg-sky-600 text-white shadow-sky-200"
+                        : "border-slate-200 bg-slate-50/70 text-slate-700 hover:border-sky-400 hover:bg-sky-50/80 hover:shadow-md"
                     }`}
                   >
                     {cond}
@@ -385,10 +395,10 @@ export default function QuotePage() {
           {/* Step 3: Extras */}
           {currentStep === 3 && (
             <div className="animate-fade-in">
-              <h2 className="mb-2 text-lg font-light uppercase tracking-widest text-amber-50">
+              <h2 className="mb-2 text-lg font-semibold uppercase tracking-widest text-slate-800">
                 Extras
               </h2>
-              <p className="mb-6 text-sm text-stone-400">
+              <p className="mb-6 text-sm font-medium text-slate-600">
                 Would you like to add any extras? Each extra is added to your final quote.
               </p>
 
@@ -399,21 +409,21 @@ export default function QuotePage() {
                     <button
                       key={id}
                       onClick={() => toggleExtra(id)}
-                      className={`flex items-center justify-between border p-4 transition-all duration-300 ${
+                      className={`flex items-center justify-between rounded-md border p-4 shadow-sm transition-all duration-300 ${
                         isSelected
-                          ? "border-amber-400 bg-amber-400/10"
-                          : "border-amber-900/20 bg-stone-950 hover:bg-amber-400/5"
+                          ? "border-sky-500 bg-sky-50 shadow-sky-100"
+                          : "border-slate-200 bg-slate-50/70 hover:border-sky-400 hover:bg-sky-50/80 hover:shadow-md"
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon
                           className={`h-5 w-5 transition-colors duration-300 ${
-                            isSelected ? "text-amber-400" : "text-stone-400"
+                            isSelected ? "text-sky-600" : "text-slate-400"
                           }`}
                         />
                         <span
-                          className={`text-sm uppercase tracking-widest transition-colors duration-300 ${
-                            isSelected ? "text-amber-400" : "text-stone-300"
+                          className={`text-sm font-medium uppercase tracking-widest transition-colors duration-300 ${
+                            isSelected ? "text-sky-600" : "text-slate-600"
                           }`}
                         >
                           {label}
@@ -421,12 +431,12 @@ export default function QuotePage() {
                       </div>
                       {/* Toggle Switch */}
                       <div
-                        className={`relative h-6 w-11 transition-colors duration-300 ${
-                          isSelected ? "bg-amber-400" : "bg-stone-700"
+                        className={`relative h-6 w-11 rounded-full transition-colors duration-300 ${
+                          isSelected ? "bg-sky-600" : "bg-slate-200"
                         }`}
                       >
                         <div
-                          className={`absolute top-1 h-4 w-4 bg-stone-950 transition-all duration-300 ${
+                          className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-all duration-300 ${
                             isSelected ? "left-6" : "left-1"
                           }`}
                         />
@@ -441,42 +451,42 @@ export default function QuotePage() {
           {/* Step 4: Details */}
           {currentStep === 4 && (
             <div className="animate-fade-in">
-              <h2 className="mb-2 text-lg font-light uppercase tracking-widest text-amber-50">
+              <h2 className="mb-2 text-lg font-semibold uppercase tracking-widest text-slate-800">
                 Details
               </h2>
-              <p className="mb-6 text-sm text-stone-400">
+              <p className="mb-6 text-sm font-medium text-slate-600">
                 Almost there. Enter your details to receive your quote.
               </p>
 
               <div className="space-y-6">
                 <div>
-                  <label className="mb-2 block text-sm font-light uppercase tracking-widest text-stone-300">
-                    Full Name <span className="text-amber-400">*</span>
+                  <label className="mb-2 block text-sm font-semibold uppercase tracking-widest text-slate-700">
+                    Full Name <span className="text-sky-600">*</span>
                   </label>
                   <input
                     type="text"
                     value={formData.fullName}
                     onChange={(e) => updateFormData("fullName", e.target.value)}
                     placeholder="Your full name"
-                    className="w-full border border-amber-900/30 bg-stone-950 px-4 py-3 text-amber-50 placeholder:text-stone-500 focus:border-amber-400/60 focus:outline-none"
+                    className="w-full rounded-md border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-800 shadow-sm placeholder:text-slate-400 focus:border-sky-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 focus:shadow-md"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-light uppercase tracking-widest text-stone-300">
-                    Email Address <span className="text-amber-400">*</span>
+                  <label className="mb-2 block text-sm font-semibold uppercase tracking-widest text-slate-700">
+                    Email Address <span className="text-sky-600">*</span>
                   </label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => updateFormData("email", e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full border border-amber-900/30 bg-stone-950 px-4 py-3 text-amber-50 placeholder:text-stone-500 focus:border-amber-400/60 focus:outline-none"
+                    className="w-full rounded-md border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-800 shadow-sm placeholder:text-slate-400 focus:border-sky-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 focus:shadow-md"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-light uppercase tracking-widest text-stone-300">
+                  <label className="mb-2 block text-sm font-semibold uppercase tracking-widest text-slate-700">
                     Phone Number
                   </label>
                   <input
@@ -484,12 +494,12 @@ export default function QuotePage() {
                     value={formData.phone}
                     onChange={(e) => updateFormData("phone", e.target.value)}
                     placeholder="0400 000 000"
-                    className="w-full border border-amber-900/30 bg-stone-950 px-4 py-3 text-amber-50 placeholder:text-stone-500 focus:border-amber-400/60 focus:outline-none"
+                    className="w-full rounded-md border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-800 shadow-sm placeholder:text-slate-400 focus:border-sky-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 focus:shadow-md"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm font-light uppercase tracking-widest text-stone-300">
+                  <label className="mb-2 block text-sm font-semibold uppercase tracking-widest text-slate-700">
                     Suburb
                   </label>
                   <input
@@ -497,11 +507,11 @@ export default function QuotePage() {
                     value={formData.suburb}
                     onChange={(e) => updateFormData("suburb", e.target.value)}
                     placeholder="Your suburb"
-                    className="w-full border border-amber-900/30 bg-stone-950 px-4 py-3 text-amber-50 placeholder:text-stone-500 focus:border-amber-400/60 focus:outline-none"
+                    className="w-full rounded-md border border-slate-200 bg-slate-50/70 px-4 py-3 text-slate-800 shadow-sm placeholder:text-slate-400 focus:border-sky-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 focus:shadow-md"
                   />
                 </div>
 
-                <p className="text-xs text-stone-500">
+                <p className="text-xs font-medium text-slate-500">
                   We&apos;ll only use your details to send your quote and follow up. No spam.
                 </p>
               </div>
@@ -511,12 +521,12 @@ export default function QuotePage() {
           {/* Step 5: Quote */}
           {currentStep === 5 && (
             <div className="animate-fade-in">
-              <h2 className="mb-8 text-lg font-light uppercase tracking-widest text-amber-50">
+              <h2 className="mb-8 text-lg font-semibold uppercase tracking-widest text-slate-800">
                 Your Quote
               </h2>
 
               <div className="mb-8 text-center">
-                <p className="text-4xl font-light tracking-wide text-amber-400">
+                <p className="text-4xl font-bold tracking-wide text-sky-600">
                   {quote ? `From $${quote.low} – $${quote.high}` : "Calculating..."}
                 </p>
               </div>
@@ -524,36 +534,38 @@ export default function QuotePage() {
               <div className="mb-6 space-y-3">
                 {formData.propertyType && (
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm text-stone-300">
+                    <Check className="h-4 w-4 text-sky-600" />
+                    <span className="text-sm font-medium text-slate-600">
                       {PROPERTY_TYPES.find((p) => p.id === formData.propertyType)?.label}
                     </span>
                   </div>
                 )}
                 <div className="flex items-center gap-3">
-                  <Check className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm text-stone-300">
+                  <Check className="h-4 w-4 text-sky-600" />
+                  <span className="text-sm font-medium text-slate-600">
                     {formData.bedrooms} Bedrooms, {formData.bathrooms} Bathrooms
                   </span>
                 </div>
                 {formData.serviceType && (
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm text-stone-300">
+                    <Check className="h-4 w-4 text-sky-600" />
+                    <span className="text-sm font-medium text-slate-600">
                       {SERVICE_TYPES.find((s) => s.id === formData.serviceType)?.label}
                     </span>
                   </div>
                 )}
                 {formData.frequency && (
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm text-stone-300">{formData.frequency}</span>
+                    <Check className="h-4 w-4 text-sky-600" />
+                    <span className="text-sm font-medium text-slate-600">
+                      {formData.frequency}
+                    </span>
                   </div>
                 )}
                 {formData.extras.length > 0 && (
                   <div className="flex items-start gap-3">
-                    <Check className="mt-0.5 h-4 w-4 text-amber-400" />
-                    <span className="text-sm text-stone-300">
+                    <Check className="mt-0.5 h-4 w-4 text-sky-600" />
+                    <span className="text-sm font-medium text-slate-600">
                       Extras:{" "}
                       {formData.extras
                         .map((e) => EXTRAS.find((ex) => ex.id === e)?.label)
@@ -563,32 +575,33 @@ export default function QuotePage() {
                 )}
               </div>
 
-              <div className="mb-6 border-t border-amber-900/20" />
+              <div className="mb-6 border-t border-slate-100" />
 
               <div className="flex flex-col gap-4 sm:flex-row">
                 <a
                   href="/#contact"
-                  className="flex-1 bg-amber-400 px-6 py-4 text-center text-sm uppercase tracking-widest text-stone-950 transition-colors duration-300 hover:bg-amber-300"
+                  className="flex-1 rounded-md bg-sky-600 px-6 py-4 text-center text-sm font-semibold uppercase tracking-widest text-white transition-colors duration-300 hover:bg-sky-700"
                 >
                   Book This Clean
                 </a>
                 <a
                   href="tel:0412345678"
-                  className="flex-1 border border-amber-400 px-6 py-4 text-center text-sm uppercase tracking-widest text-amber-50 transition-colors duration-300 hover:bg-amber-400/10"
+                  className="flex-1 rounded-md border border-slate-800 bg-slate-800 px-6 py-4 text-center text-sm font-semibold uppercase tracking-widest text-white transition-colors duration-300 hover:bg-slate-700"
                 >
                   Call to Discuss
                 </a>
               </div>
 
-              <p className="mt-6 text-center text-xs text-stone-400">
+              <p className="mt-6 text-center text-xs font-medium text-slate-500">
                 This is an estimate. Final price confirmed after property inspection.
               </p>
             </div>
           )}
+
           {/* Validation Error */}
           {validationError && (
-            <div className="mt-6 border border-red-400/40 bg-red-900/20 px-4 py-3">
-              <p className="text-sm text-red-400">{validationError}</p>
+            <div className="mt-6 rounded-md border border-red-200 bg-red-50 px-4 py-3">
+              <p className="text-sm font-medium text-red-600">{validationError}</p>
             </div>
           )}
         </div>
@@ -598,7 +611,7 @@ export default function QuotePage() {
           {currentStep > 1 && currentStep < 5 ? (
             <button
               onClick={handleBack}
-              className="flex items-center gap-2 border border-amber-900/20 px-6 py-3 text-sm uppercase tracking-widest text-stone-400 transition-colors duration-300 hover:bg-amber-400/10"
+              className="flex items-center gap-2 rounded-md border border-slate-200 px-6 py-3 text-sm font-medium uppercase tracking-widest text-slate-600 transition-colors duration-300 hover:bg-slate-50"
             >
               <ChevronLeft className="h-4 w-4" />
               Back
@@ -610,7 +623,7 @@ export default function QuotePage() {
           {currentStep < 4 && (
             <button
               onClick={handleNext}
-              className="ml-auto flex items-center gap-2 bg-amber-400 px-6 py-3 text-sm uppercase tracking-widest text-stone-950 transition-colors duration-300 hover:bg-amber-300"
+              className="ml-auto flex items-center gap-2 rounded-md bg-sky-600 px-6 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-colors duration-300 hover:bg-sky-700"
             >
               {currentStep === 4 ? "Calculate My Quote" : "Next"}
               <ChevronRight className="h-4 w-4" />
@@ -620,17 +633,17 @@ export default function QuotePage() {
             <button
               onClick={submitForm}
               disabled={isSubmitting}
-              className="ml-auto flex items-center gap-2 bg-amber-400 px-6 py-3 text-sm uppercase tracking-widest text-stone-950 transition-colors duration-300 hover:bg-amber-300 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="ml-auto flex items-center gap-2 rounded-md bg-sky-600 px-6 py-3 text-sm font-semibold uppercase tracking-widest text-white transition-colors duration-300 hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSubmitting ? "Calculating..." : "Calculate My Quote"}
               <ChevronRight className="h-4 w-4" />
-             </button>
-            )}
+            </button>
+          )}
           {submitError && (
-            <div className="mt-6 border border-red-400/40 bg-red-900/20 px-4 py-3">
-              <p className="text-sm text-red-400">{submitError}</p>
+            <div className="mt-6 rounded-md border border-red-200 bg-red-50 px-4 py-3">
+              <p className="text-sm font-medium text-red-600">{submitError}</p>
             </div>
-)}
+          )}
         </div>
       </div>
 
@@ -652,3 +665,8 @@ export default function QuotePage() {
     </main>
   )
 }
+
+
+
+ 
+
